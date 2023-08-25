@@ -1,4 +1,8 @@
-let hover = (event) => event.target.classList.toggle('hover');
+let hover = (event) => event.target.classList.add('hover');
+
+let colorSquare = (event) => {
+  event.target.style.backgroundColor = 'black';
+}
 
 let gridContainer = document.querySelector('#grid');
 
@@ -8,7 +12,8 @@ for (row = 0; row < 16; row++) {
     square.classList.add('square')
     gridContainer.appendChild(square)
     square.addEventListener('mouseenter', hover)
-    square.addEventListener('mouseleave', hover)
+    //square.addEventListener('mouseleave', hover)
+    //square.addEventListener('click', colorSquare)
   }
 }
 

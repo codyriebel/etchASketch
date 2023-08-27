@@ -1,45 +1,46 @@
-let hover = (event) => event.target.classList.add('hover');
+let color = (event) => event.target.classList.add('color');
 
-let colorSquare = (event) => {
-  event.target.style.backgroundColor = 'black';
-}
 
-let removeGrid = (size) => {
-  for (i = 0; i < size*size; i++) {
-    gridContainer.removeChild(square);
+let removeGrid = () => {
+  let squares = document.querySelectorAll('.square')
+  squaresArr = Array.from(squares);
+  for (square of squaresArr) {
+    document.querySelector('#grid').removeChild(square);
   }
 }
 
 let createGrid = (size) => {
+  let grid = document.querySelector('#grid');
   for (i = 0; i < size*size; i++) {
-    square = document.createElement('div');
+    let square = document.createElement('div');
     square.classList.add('square')
-    gridContainer.appendChild(square)
-    square.addEventListener('mouseenter', hover)
-    //square.addEventListener('mouseleave', hover)
-    //square.addEventListener('click', colorSquare) 
+    grid.appendChild(square)
+    square.addEventListener('mouseenter', color)
+    //square.addEventListener('mouseleave', hover) 
   }
 }
 
-let gridEvent = () => {
-  removeGrid(numSquare);
+let newGrid = () => {
+  removeGrid();
+  let size = getGridSize();
+  createGrid(size);
+}
+
+let getGridSize = () => {
   while (true) {
-    numSquare = prompt('How many squares per side? (1 - 100)', '16');
+    let numSquare = prompt(
+      'How many squares per side? (1 - 100)', '16'
+    );
     if (parseInt(numSquare) > 100) {
       alert('MAX 100');
     } else if (parseInt(numSquare) < 1) {
       alert('MIN 0')
-    } else break;
+    } 
+    return numSquare;
   }
-  createGrid(numSquare);
 }
 
-let gridContainer = document.querySelector('#grid');
+createGrid(16);
 
-let square;
-let numSquare = 16;
-
-let squareChoice = document.querySelector('#buttonNumSquare');
-squareChoice.addEventListener('click', gridEvent)
-
-createGrid(numSquare);
+let buttonNumSquare = document.querySelector('#buttonNumSquare');
+buttonNumSquare.addEventListener('click', newGrid)

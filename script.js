@@ -1,26 +1,52 @@
-let color = (event) => {
-  if (touches > 0) {
-    touches -= 1;
-  };
+let grayscale = true;
+let shadeActive = true;
+let randomColor = false;
+let choseAColor = false;
 
-  if (randomColor === true) {
-    clr = getRandomColor();
-    event.target.style.backgroundColor = (clr);
-  } else if (choseAColor === true) {
-    let chosen = document.querySelector('#chooseColor');
-    event.target.style.backgroundColor = chosen.value;
-  } else if (grayscale === true ) {
-    event.target.style.backgroundColor = `#${touches}${touches}${touches}`;
+let color = (event) => {
+  let currentSquare = event.target;
+  let currentColor = currentSquare.style.backgroundColor;
+  let currentRgb = (currentColor.split(',').slice(0,3)).toString();
+  let currentAlpha = (currentColor.split(',')[3].slice(0,4)).toString();
+
+  if (grayscale === true ) {
+    if (currentRgb != 'rgba(0,0,0,') {
+      currentRgb = 'rgba(0,0,0,';
+    }
   }
+
+  else if (randomColor === true) {
+    currentRgb = getRandomColor();
+  }
+
+  else if (choseAColor === true) {
+    let chosen = document.querySelector('#chooseColor');
+    let rgbPair = (chosen.value).match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+    let rgbCalc = [
+      parseInt(rgbPair[1], 16),
+      parseInt(rgbPair[2], 16),
+      parseInt(rgbPair[3], 16),
+    ];
+    currentRgb = `rgba(${rgbCalc[0]},${rgbCalc[1]},${rgbCalc[2]},`;
+  }
+
+  if (shadeActive === true) {
+    if (+currentAlpha != 0.9) {
+      currentAlpha = +currentAlpha + 0.1;
+    }
+  } 
+
+  let newColor = `${currentRgb}${currentAlpha})`;
+  console.log(newColor);
+  event.target.style.backgroundColor = newColor;
+
 }
 
 function getRandomColor() {
-  let letters = '0123456789ABCDEF';
-  let hexcolor = '#';
-  for (let i = 0; i < 6; i++) {
-    hexcolor += letters[Math.floor(Math.random() * 16)];
-  }
-  return hexcolor;
+  randomR = Math.floor(Math.random() * 255);
+  randomG = Math.floor(Math.random() * 255);
+  randomB = Math.floor(Math.random() * 255);
+  return `rgba(${randomR},${randomG},${randomB},`;
 }
 
 let randomColors = () => {
@@ -50,27 +76,6 @@ let removeGrid = () => {
   }
 }
 
-let createGrid = (size) => {
-  let grid = document.querySelector('#grid');
-  for (col = 0; col < size; col++) {
-    let rowContainer = document.createElement('div');
-    rowContainer.classList.add('rowContainer');
-    grid.appendChild(rowContainer);
-    for (row = 0; row < size; row++) {
-      let square = document.createElement('div');
-      square.classList.add('square');
-      rowContainer.appendChild(square);
-      square.addEventListener('mouseenter', color);
-    }
-  }
-}
-
-let newGrid = () => {
-  removeGrid();
-  let size = getGridSize();
-  createGrid(size);
-}
-
 let getGridSize = () => {
   while (true) {
     let numSquare = prompt(
@@ -85,14 +90,47 @@ let getGridSize = () => {
   }
 }
 
+let createGrid = (size) => {
+  let grid = document.querySelector('#grid');
+  for (col = 0; col < size; col++) {
+    let rowContainer = document.createElement('div');
+    rowContainer.classList.add('rowContainer');
+    grid.appendChild(rowContainer);
+    for (row = 0; row < size; row++) {
+      let square = document.createElement('div');
+      square.classList.add('square');
+      square.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+      rowContainer.appendChild(square);
+      square.addEventListener('mouseenter', color);
+    }
+  }
+}
+
+let newGrid = () => {
+  removeGrid();
+  let size = getGridSize();
+  createGrid(size);
+}
+
 let clearGrid = () => {
   let squares = document.querySelectorAll('.square');
   let squaresArr = Array.from(squares);
   for (s of squaresArr) {
-    s.style.backgroundColor = '#fff';
+    s.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
   }
 }
 
+let shade = () => {
+  if (shadeActive === true) {
+    shadeActive = false;
+    shading.textContent = 'shading on';
+  } else {
+    shadeActive = true;
+    shading.textContent = 'shading off';
+  }
+}
+
+// initial grid size
 createGrid(16);
 
 let buttonNumSquare = document.querySelector('#buttonNumSquare');
@@ -101,16 +139,12 @@ buttonNumSquare.addEventListener('click', newGrid);
 let buttonRandomColors = document.querySelector('#buttonRandomColors');
 buttonRandomColors.addEventListener('click', randomColors);
 
-let randomColor = false;
-
-let grayscale = true;
+let shading = document.querySelector('#shading');
+shading.addEventListener('click', shade);
 
 let colorChoice = document.querySelector('#chooseColor');
 colorChoice.addEventListener('click', chooseColor);
 
-let choseAColor = false;
-
 let clear = document.querySelector('#clear');
 clear.addEventListener('click', clearGrid)
 
-let touches = 10;

@@ -15,11 +15,11 @@ let color = (event) => {
     }
   }
 
-  else if (randomColor === true) {
+  if (randomColor === true) {
     currentRgb = getRandomColor();
   }
 
-  else if (choseAColor === true) {
+  if (choseAColor === true) {
     let chosen = document.querySelector('#chooseColor');
     let rgbPair = (chosen.value).match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
     let rgbCalc = [
@@ -37,7 +37,6 @@ let color = (event) => {
   } 
 
   let newColor = `${currentRgb}${currentAlpha})`;
-  console.log(newColor);
   event.target.style.backgroundColor = newColor;
 
 }
@@ -51,6 +50,7 @@ function getRandomColor() {
 
 let randomColors = () => {
   choseAColor = false;
+  buttonRandomColors.classList.toggle('rainbow')
   if (randomColor === false) {
     randomColor = true;
     grayscale = false;
@@ -64,8 +64,6 @@ let randomColors = () => {
 
 let chooseColor = () => {
   choseAColor = true;
-  randomColor = false;
-  grayscale = false;
 }
 
 let removeGrid = () => {
@@ -83,8 +81,10 @@ let getGridSize = () => {
     );
     if (parseInt(numSquare) > 100) {
       alert('MAX 100');
+      continue;
     } else if (parseInt(numSquare) < 1) {
       alert('MIN 0');
+      continue;
     } 
     return numSquare;
   }
@@ -107,9 +107,11 @@ let createGrid = (size) => {
 }
 
 let newGrid = () => {
-  removeGrid();
   let size = getGridSize();
-  createGrid(size);
+  if (size !== null) {
+    removeGrid();
+    createGrid(size);
+  }
 }
 
 let clearGrid = () => {
@@ -121,12 +123,11 @@ let clearGrid = () => {
 }
 
 let shade = () => {
+  shading.classList.toggle('active');
   if (shadeActive === true) {
     shadeActive = false;
-    shading.textContent = 'shading on';
   } else {
     shadeActive = true;
-    shading.textContent = 'shading off';
   }
 }
 

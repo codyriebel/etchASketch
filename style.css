@@ -1,3 +1,39 @@
+body {
+  background-color: #eee;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 75px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+button {
+  font-size: 16px;
+  padding: 15px;
+  border: solid 1px;
+  border-radius: 7px;
+}
+
+.chooseColorContainer {
+  font-size: 16px;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.active {
+  background-color: #444;
+  color: white;
+}
+
 .gridContainer {
   display: flex;
   justify-content: center;
@@ -18,4 +54,12 @@
 .square {
   border: solid 1px;
   flex: 1;
+}
+
+h2 {
+  padding: 20px;
+}
+
+button:hover {
+  background-color: #ddd;
 }

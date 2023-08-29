@@ -8,16 +8,21 @@
 <body>
   <h1>Etch-a-Sketch</h1>
   <div class="buttonContainer">
-    <button id="buttonNumSquare"># of squares</button>
+    <button id="buttonNumSquare">new grid</button>
     <button id="buttonRandomColors">random colors</button>
-    <button id="shading">shading off</button>
-    <label for="chooseColor">choose color</label>
-    <input id="chooseColor" type="color">
+    <button id="shading" class="active">shading</button>
+    <div class="chooseColorContainer">
+      <label for="chooseColor">choose color</label>
+      <input id="chooseColor" type="color">
+    </div>
     <button id="clear">clear</button>
   </div>
   <div class="gridContainer">
     <div id="grid"></div>
   </div>
 </body>
+<footer>
+  <h2>© Cody Riebel 2023</h2>
+</footer>
 <script src="script.js"></script>
 </html>

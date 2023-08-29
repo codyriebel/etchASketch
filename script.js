@@ -40,10 +40,6 @@ let chooseColor = () => {
   choseAColor = true;
   randomColor = false;
   grayscale = false;
-  choice.type = 'color';
-  colorChoice.remove();
-  let buttonContainer = document.querySelector('.buttonContainer');
-  buttonContainer.appendChild(choice);
 }
 
 let removeGrid = () => {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 200px 0;
+  margin: 20px 0;
 }
 
 #grid {
@@ -11,11 +11,11 @@
   display: grid;
 }
 
-.square {
-  border: solid 1px;
-  flex-grow: 0;
+.rowContainer {
+  display: flex;
 }
 
-.color {
-  background-color: #444;
+.square {
+  border: solid 1px;
+  flex: 1;
 }

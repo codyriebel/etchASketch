@@ -2,6 +2,7 @@ let grayscale = true;
 let shadeActive = true;
 let randomColor = false;
 let choseAColor = false;
+let gridShown = true;
 
 let color = (event) => {
   let currentSquare = event.target;
@@ -99,6 +100,9 @@ let createGrid = (size) => {
     for (row = 0; row < size; row++) {
       let square = document.createElement('div');
       square.classList.add('square');
+      if (gridShown === true) {
+        square.classList.add('gridlines');
+      }
       square.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
       rowContainer.appendChild(square);
       square.addEventListener('mouseenter', color);
@@ -131,6 +135,21 @@ let shade = () => {
   }
 }
 
+let toggleGrid = () => {
+  if (gridShown === true) {
+    gridShown = false;
+  } else {
+    gridShown = true;
+  }
+
+  gridlines.classList.toggle('active');
+  let squares = document.querySelectorAll('.square');
+  let squaresArr = Array.from(squares);
+  for (s of squaresArr) {
+    s.classList.toggle('gridlines');
+  }
+}
+
 // initial grid size
 createGrid(16);
 
@@ -142,6 +161,9 @@ buttonRandomColors.addEventListener('click', randomColors);
 
 let shading = document.querySelector('#shading');
 shading.addEventListener('click', shade);
+
+let gridlines = document.querySelector('#gridlines');
+gridlines.addEventListener('click', toggleGrid);
 
 let colorChoice = document.querySelector('#chooseColor');
 colorChoice.addEventListener('click', chooseColor);

@@ -45,6 +45,7 @@ button {
   height: 500px;
   width: 500px;
   display: grid;
+  border: solid 1px;
 }
 
 .rowContainer {
@@ -52,8 +53,11 @@ button {
 }
 
 .square {
-  border: solid 1px;
   flex: 1;
+}
+
+.gridlines {
+  border: solid 1px;
 }
 
 h2 {

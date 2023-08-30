@@ -7,64 +7,70 @@ let gridShown = true;
 let color = (event) => {
   let currentSquare = event.target;
   let currentColor = currentSquare.style.backgroundColor;
-  let currentRgb = (currentColor.split(',').slice(0,3)).toString();
-  let currentAlpha = (currentColor.split(',')[3].slice(0,4)).toString();
+  let newColor;
 
   if (grayscale === true ) {
-    if (currentRgb != 'rgba(0,0,0,') {
-      currentRgb = 'rgba(0,0,0,';
-    }
+    newColor = 'rgb(200, 200, 200)';
   }
+  
 
   if (randomColor === true) {
-    currentRgb = getRandomColor();
+    newColor = getRandomColor();
   }
 
   if (choseAColor === true) {
     let chosen = document.querySelector('#chooseColor');
-    let rgbPair = (chosen.value).match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+    let rgbPair = (chosen.value).match(
+      /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i
+    );
     let rgbCalc = [
       parseInt(rgbPair[1], 16),
       parseInt(rgbPair[2], 16),
       parseInt(rgbPair[3], 16),
     ];
-    currentRgb = `rgba(${rgbCalc[0]},${rgbCalc[1]},${rgbCalc[2]},`;
+    newColor = `rgb(${rgbCalc[0]}, ${rgbCalc[1]}, ${rgbCalc[2]})`;
   }
 
   if (shadeActive === true) {
-    if (+currentAlpha != 0.9) {
-      currentAlpha = +currentAlpha + 0.1;
+  let rgbValues; 
+    if (currentColor === '') {
+      currentColor = newColor;
     }
+    rgbValues = currentColor.match(/[\d]{1,3}/g);
+    let newRgb = rgbValues.map((value) => parseInt(value) - 20);
+    let [r, g, b] = newRgb;
+    newColor = `rgb(${r},${g},${b})`;
   } 
 
-  let newColor = `${currentRgb}${currentAlpha})`;
   event.target.style.backgroundColor = newColor;
-
 }
 
 function getRandomColor() {
   randomR = Math.floor(Math.random() * 255);
   randomG = Math.floor(Math.random() * 255);
   randomB = Math.floor(Math.random() * 255);
-  return `rgba(${randomR},${randomG},${randomB},`;
+  return `rgb(${randomR}, ${randomG}, ${randomB})`;
 }
 
 let randomColors = () => {
   choseAColor = false;
-  buttonRandomColors.classList.toggle('rainbow')
-  if (randomColor === false) {
-    randomColor = true;
-    grayscale = false;
-    buttonRandomColors.textContent = 'grayscale';
-  } else {
+  
+  if (buttonRandomColors.textContent === 'grayscale') {
     randomColor = false;
     grayscale = true;
     buttonRandomColors.textContent = 'random colors';
+  } else {
+    randomColor = true;
+    grayscale = false;
+    buttonRandomColors.textContent = 'grayscale';
   }
+
 }
 
 let chooseColor = () => {
   choseAColor = true;
+  grayscale = false;
+  randomColor = false;
 }
 
 let removeGrid = () => {
@@ -103,7 +109,6 @@ let createGrid = (size) => {
       if (gridShown === true) {
         square.classList.add('gridlines');
       }
-      square.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
       rowContainer.appendChild(square);
       square.addEventListener('mouseenter', color);
     }
@@ -122,7 +127,7 @@ let clearGrid = () => {
   let squares = document.querySelectorAll('.square');
   let squaresArr = Array.from(squares);
   for (s of squaresArr) {
-    s.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+    s.style.backgroundColor = 'rgb(255, 255, 255)';
   }
 }
 

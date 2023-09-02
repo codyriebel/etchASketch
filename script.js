@@ -32,9 +32,11 @@ let color = (event) => {
   }
 
   if (shadeActive === true) {
-  let rgbValues;
-  if (currentColor !== '') {
-    rgbValues = newColor.match(/[\d]{1,3}/g);
+  let rgbValues; 
+    if (currentColor === '') {
+      currentColor = newColor;
+    }
+    rgbValues = currentColor.match(/[\d]{1,3}/g);
     let newRgb = rgbValues.map((value) => parseInt(value) - 20);
     let [r, g, b] = newRgb;
     newColor = `rgb(${r},${g},${b})`;
@@ -123,9 +125,10 @@ let newGrid = () => {
 
 let clearGrid = () => {
   let squares = document.querySelectorAll('.square');
-  let length = Math.sqrt(squares.length);
-  removeGrid();
-  createGrid(length);
+  let squaresArr = Array.from(squares);
+  for (s of squaresArr) {
+    s.style.backgroundColor = 'rgb(255, 255, 255)';
+  }
 }
 
 let shade = () => {
@@ -172,4 +175,3 @@ colorChoice.addEventListener('click', chooseColor);
 
 let clear = document.querySelector('#clear');
 clear.addEventListener('click', clearGrid)
-

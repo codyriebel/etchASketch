@@ -125,10 +125,9 @@ let newGrid = () => {
 
 let clearGrid = () => {
   let squares = document.querySelectorAll('.square');
-  let squaresArr = Array.from(squares);
-  for (s of squaresArr) {
-    s.style.backgroundColor = 'rgb(255, 255, 255)';
-  }
+  let length = Math.sqrt(squares.length);
+  removeGrid();
+  createGrid(length);
 }
 
 let shade = () => {

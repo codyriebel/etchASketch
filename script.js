@@ -32,7 +32,8 @@ let color = (event) => {
   }
 
   if (shadeActive === true) {
-  let rgbValues; 
+  let rgbValues;
+  if (currentColor !== '') {
     rgbValues = newColor.match(/[\d]{1,3}/g);
     let newRgb = rgbValues.map((value) => parseInt(value) - 20);
     let [r, g, b] = newRgb;

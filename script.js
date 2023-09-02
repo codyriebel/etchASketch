@@ -174,4 +174,4 @@ let colorChoice = document.querySelector('#chooseColor');
 colorChoice.addEventListener('click', chooseColor);
 
 let clear = document.querySelector('#clear');
-clear.addEventListener('click', clearGrid)
+clear.addEventListener('click', clearGrid);
